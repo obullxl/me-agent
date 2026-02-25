@@ -2,3 +2,8 @@
 # pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple
 #
 langchain==1.2.10
+langchain_core
+langchain_community==0.4.1
+
+# ZhipuAI需要 pip uninstall jwt 然后安装 PyJWT
+PyJWT==2.11.0

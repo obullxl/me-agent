@@ -43,3 +43,13 @@ conda activate env_name：激活环境
 conda deactivate：退出环境
 conda remove --name env_name --all：删除环境
 ```
+
+## 复制研发环境
+
+```
+# 导出研发环境
+conda env export > environment.yml
+
+# 导入研发环境
+conda env create -f environment.yml
+```
