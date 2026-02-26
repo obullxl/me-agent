@@ -1,10 +1,14 @@
 # langchain.py
 import os
 
+from dotenv import load_dotenv
 from langchain_community.chat_models import ChatZhipuAI
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import PromptTemplate
+from langchain_openai import ChatOpenAI
 
+# 加载环境变量
+load_dotenv()
 
 def create_semantic_analyzer():
     """
@@ -22,15 +26,27 @@ def create_semantic_analyzer():
     )
     
     # 初始化大语言模型
-    api_key = os.getenv("ZHIPU_API_KEY")
+    model_type = os.getenv("MODEL_TYPE", "OPENAI").upper()
+    print(f"使用的LLM类型：{model_type}")
+    
+    api_key = os.getenv("MODEL_API_KEY")
     if not api_key:
-        raise ValueError("环境变量 ZHIPU_API_KEY 未设置！")
-
-    llm = ChatZhipuAI(
-        model="glm-4.7-flash",
-        api_key=api_key,
-        temperature=0.3,  # 降低温度以获得更确定性的分析结果
-    )
+        raise ValueError("环境变量 MODEL_API_KEY 未设置！")
+    
+    if model_type == "OPENAI":
+        llm = ChatOpenAI(
+            model=os.getenv("MODEL_NAME", "gpt-4o-mini"),
+            api_key=api_key,
+            base_url=os.getenv("PROXY_BASE_URL", "https://free.v36.cm/v1"),
+            temperature=0.3,
+        )
+    elif model_type == "ZHIPUAI":
+        llm = ChatZhipuAI(
+            model=os.getenv("MODEL_NAME", "glm-4.7-flash"),
+            api_key=api_key,
+            base_url=os.getenv("PROXY_BASE_URL", "https://open.bigmodel.cn/api/paas/v4"),
+            temperature=0.3,
+        )
     
     # 创建语义识别链
     # 使用LCEL（LangChain Expression Language）语法
