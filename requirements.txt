@@ -10,6 +10,7 @@ langchain-mcp-adapters==0.2.1
 
 dotenv==0.9.9
 openai==2.24.0
+fastmcp
 
 # ZhipuAI需要 pip uninstall jwt 然后安装 PyJWT
 PyJWT==2.11.0
