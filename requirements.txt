@@ -3,7 +3,6 @@
 #
 langchain==1.2.10
 langgraph
-langchain_core
 langchain_community==0.4.1
 langchain_openai==1.1.10
 langchain-mcp-adapters==0.2.1
@@ -14,3 +13,17 @@ fastmcp
 
 # ZhipuAI需要 pip uninstall jwt 然后安装 PyJWT
 PyJWT==2.11.0
+
+# 向量化
+torch==2.10.0
+faiss-cpu
+chromadb==1.5.2
+
+langchain-huggingface
+sentence-transformers
+
+# Markdown解析器
+unstructured[local-inference]
+
+# PDF中的图像或复杂的布局
+unstructured[pdf]
