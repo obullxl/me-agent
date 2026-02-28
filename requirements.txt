@@ -27,3 +27,6 @@ unstructured[local-inference]
 
 # PDF中的图像或复杂的布局
 unstructured[pdf]
+
+# TTS文本转音频
+pyttsx3

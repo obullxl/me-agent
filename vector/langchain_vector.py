@@ -1,6 +1,5 @@
 import os
 
-import torch
 from dotenv import load_dotenv
 from langchain_community.document_loaders import (
     PyPDFLoader,
@@ -11,21 +10,17 @@ from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
+from config import DEVICE, EMBEDDING_MODEL_PATH, FAISS_INDEX_PATH
+
 # 参数配置
 load_dotenv()
 
-MODEL_PATH = os.getenv("EMBEDDING_MODEL_PATH", "D:\\ModelSpace\\Qwen3-Embedding-0.6B")
 LOCAL_FILE_DIR = "D:\\CodeSpace\\public-agent-skills\\skills"
-VECTORSTORE_PATH = os.getenv("FAISS_INDEX_PATH", "vectorstore/faiss_index")
-
-DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 print("-" * 50)
-print(f"使用设备: {DEVICE}")
-print(f"嵌入模型路径: {MODEL_PATH}")
 print(f"本地文档目录: {LOCAL_FILE_DIR}")
-print(f"向量数据库路径: {VECTORSTORE_PATH}")
 print("-" * 50)
+
 
 def load_embedding_model(model_path, device):
     """加载 HuggingFace Embeddings 模型"""
@@ -39,7 +34,6 @@ def load_embedding_model(model_path, device):
         encode_kwargs={
             "batch_size": 128,
             "normalize_embeddings": True,
-            "show_progress_bar": True,
         },
     )
     return embeddings
@@ -54,7 +48,7 @@ def load_document(file_path):
     elif ext == ".txt":
         loader = TextLoader(file_path, encoding="utf-8")
         return loader.load()
-    elif ext in [".md", ".md.template"]:
+    elif ext == ".md":
         loader = UnstructuredMarkdownLoader(file_path)
         return loader.load()
     else:
@@ -63,7 +57,7 @@ def load_document(file_path):
 
 def load_all_documents(directory):
     """递归遍历根目录，加载所有 .txt, .pdf, .md 文件"""
-    supported_ext = [".txt", ".pdf", ".md", ".md.template"]
+    supported_ext = [".txt", ".pdf", ".md"]
     documents = []
     for dirpath, _, filenames in os.walk(directory):
         for filename in filenames:
@@ -118,29 +112,28 @@ def create_vectorstore(embeddings, documents, vectorstore_path):
             embeddings,
             allow_dangerous_deserialization=True,
         )
-        print(f"向量数据库加载成功！共包含 {len(vectorstore.index.ntotal)} 个向量。")
-        vectorstore.aadd_documents(split_docs)
+        print(f"向量数据库加载成功！共包含 {vectorstore.index.ntotal} 个向量。")
+        vectorstore.add_documents(split_docs)
     else:
         print("向量数据库不存在，正在创建新的数据库...")
         vectorstore = FAISS.from_documents(
             split_docs,
             embeddings,
-            allow_dangerous_deserialization=True,
         )
-        print(f"向量数据库创建成功！共包含 {len(vectorstore.index.ntotal)} 个向量。")
+        print(f"向量数据库创建成功！共包含 {vectorstore.index.ntotal} 个向量。")
 
     vectorstore.save_local(vectorstore_path)
-    print("向量数据库保存成功: {vectorstore_path}！")
+    print(f"向量数据库保存成功: {vectorstore_path}！")
 
 
 if __name__ == "__main__":
+    documents = load_all_documents(directory=LOCAL_FILE_DIR)
     embeddings = load_embedding_model(
-        model_path=MODEL_PATH,
+        model_path=EMBEDDING_MODEL_PATH,
         device=DEVICE,
     )
-    documents = load_all_documents(directory=LOCAL_FILE_DIR)
     create_vectorstore(
         embeddings=embeddings,
         documents=documents,
-        vectorstore_path=VECTORSTORE_PATH,
+        vectorstore_path=FAISS_INDEX_PATH,
     )
