@@ -2,7 +2,9 @@ import pyttsx3
 
 
 def text_to_speech_offline(text, output_file="output.mp3"):
-    engine = pyttsx3.init()
+    engine = pyttsx3.init(
+        debug=True,
+    )
 
     # 可选：设置语速和音量
     rate = engine.getProperty("rate")
@@ -35,4 +37,8 @@ def text_to_speech_offline(text, output_file="output.mp3"):
 # 文本转音频
 # text_to_speech_offline("LangChain 你好，我来了！", "data/pyttsx3.mp3")
 # text_to_speech_offline("野火烧不尽，春风吹又生！", "data/pyttsx3.mp3")
-text_to_speech_offline("What a nice day.", "data/pyttsx3.mp3")
+# text_to_speech_offline("What a nice day.", "data/pyttsx3.mp3")
+text_to_speech_offline(
+    "而这个config.py我存放在上级目录中，即项目根目录：D:\\CodeSpace\\me-agent\\",
+    "data/pyttsx3.mp3",
+)

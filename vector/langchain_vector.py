@@ -10,7 +10,7 @@ from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-from config import DEVICE, EMBEDDING_MODEL_PATH, FAISS_INDEX_PATH
+from config import DEVICE, EMBEDDING_MODEL_PATH, FAISS_INDEX_PATH, load_embedding_model
 
 # 参数配置
 load_dotenv()
@@ -22,21 +22,21 @@ print(f"本地文档目录: {LOCAL_FILE_DIR}")
 print("-" * 50)
 
 
-def load_embedding_model(model_path, device):
-    """加载 HuggingFace Embeddings 模型"""
-    print(f"加载嵌入模型 from {model_path} on device {device}...")
-    embeddings = HuggingFaceEmbeddings(
-        model_name=model_path,
-        model_kwargs={
-            "device": device,
-            "trust_remote_code": True,
-        },
-        encode_kwargs={
-            "batch_size": 128,
-            "normalize_embeddings": True,
-        },
-    )
-    return embeddings
+# def load_embedding_model(model_path, device):
+#     """加载 HuggingFace Embeddings 模型"""
+#     print(f"加载嵌入模型 from {model_path} on device {device}...")
+#     embeddings = HuggingFaceEmbeddings(
+#         model_name=model_path,
+#         model_kwargs={
+#             "device": device,
+#             "trust_remote_code": True,
+#         },
+#         encode_kwargs={
+#             "batch_size": 128,
+#             "normalize_embeddings": True,
+#         },
+#     )
+#     return embeddings
 
 
 def load_document(file_path):
@@ -128,10 +128,11 @@ def create_vectorstore(embeddings, documents, vectorstore_path):
 
 if __name__ == "__main__":
     documents = load_all_documents(directory=LOCAL_FILE_DIR)
-    embeddings = load_embedding_model(
-        model_path=EMBEDDING_MODEL_PATH,
-        device=DEVICE,
-    )
+    embeddings = load_embedding_model()
+    # embeddings = load_embedding_model(
+    #     model_path=EMBEDDING_MODEL_PATH,
+    #     device=DEVICE,
+    # )
     create_vectorstore(
         embeddings=embeddings,
         documents=documents,
