@@ -44,6 +44,7 @@ echo "Starting to push OpenClaw workspace..."
 
 cd ./ClawSpace
 pwd
+readlink -f ./ClawSpace
 git remote -v
 ./push.sh
 
