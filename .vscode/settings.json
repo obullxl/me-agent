@@ -1,5 +1,5 @@
 {
-  "python.defaultInterpreterPath": "D:/Software/miniconda3/pkgs/AgentME/python.exe",
+  "python.defaultInterpreterPath": "/home/obullxl/CodeSpace/Software/miniconda3/envs/AgentME/bin/python",
   "python.terminal.activateEnvironment": true,
   "terminal.integrated.env.linux": {
     "PYTHONPATH": "${workspaceFolder}:${env:PYTHONPATH}"
