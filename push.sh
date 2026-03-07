@@ -43,6 +43,7 @@ echo "**************************************************"
 echo "Starting to push OpenClaw workspace..."
 
 cd ./ClawSpace
+pwd
 git remote -v
 ./push.sh
 
