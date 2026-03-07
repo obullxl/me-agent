@@ -34,3 +34,14 @@ echo "Script completed."
 echo "=================================================="
 echo "Git push successful."
 echo "=================================================="
+
+# 开始提交OpenClaw的工作目录
+echo ""
+echo ""
+echo "**************************************************"
+echo "Starting to push OpenClaw workspace..."
+
+cd ./ClawSpace
+./push.sh
+
+echo "**************************************************"
