@@ -8,6 +8,7 @@ git config --global credential.helper store
 
 echo "=================================================="
 echo "Starting Git push script..."
+git remote -v
 echo "=================================================="
 
 # 增加文件
@@ -42,6 +43,7 @@ echo "**************************************************"
 echo "Starting to push OpenClaw workspace..."
 
 cd ./ClawSpace
+git remote -v
 ./push.sh
 
 echo "**************************************************"
