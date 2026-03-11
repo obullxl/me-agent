@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_openai import ChatOpenAI
+from langchain_litellm import ChatLiteLLM
 
 load_dotenv()
 
@@ -20,7 +21,20 @@ print(f"FAISS索引目录: {FAISS_INDEX_PATH}")
 print("-" * 50)
 
 
-def load_llm_model():
+def load_lite_llm() -> ChatLiteLLM:
+    api_key = os.getenv("MODEL_API_KEY")
+    if not api_key:
+        raise ValueError("环境变量 MODEL_API_KEY 未设置！")
+
+    return ChatLiteLLM(
+        model=os.getenv("MODEL_NAME", "gpt-4o-mini"),
+        api_key=api_key,
+        base_url=os.getenv("PROXY_BASE_URL", "https://free.v36.cm/v1"),
+        temperature=0.3,
+    )
+
+
+def load_llm_model() -> ChatOpenAI:
     api_key = os.getenv("MODEL_API_KEY")
     if not api_key:
         raise ValueError("环境变量 MODEL_API_KEY 未设置！")
@@ -33,7 +47,7 @@ def load_llm_model():
     )
 
 
-def load_embedding_model():
+def load_embedding_model() -> HuggingFaceEmbeddings:
     """加载本地 HuggingFace Embeddings 模型"""
     print("-" * 50)
     print(f"开始加载嵌入模型: {EMBEDDING_MODEL_PATH} on device {DEVICE}...")
@@ -53,7 +67,7 @@ def load_embedding_model():
     return embeddings
 
 
-def load_faiss_vectorstore(embeddings=None):
+def load_faiss_vectorstore(embeddings=None) -> FAISS:
     """加载本地 FAISS 向量数据库"""
     print("-" * 50)
     print(f"开始加载向量数据库: {FAISS_INDEX_PATH}...")

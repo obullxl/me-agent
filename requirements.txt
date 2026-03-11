@@ -1,11 +1,11 @@
 #
-# pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple
+# pip install -r requirements.txt -U -i https://mirrors.aliyun.com/pypi/simple
 #
-langchain==1.2.10
+langchain
 langgraph
-langchain_community==0.4.1
-langchain_openai==1.1.10
-langchain-mcp-adapters==0.2.1
+langchain_community
+langchain_openai
+langchain-mcp-adapters
 
 dotenv==0.9.9
 openai==2.24.0
@@ -30,3 +30,7 @@ unstructured[pdf]
 
 # TTS文本转音频
 pyttsx3
+
+litellm
+langchain-litellm
+deepagents
