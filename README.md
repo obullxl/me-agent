@@ -28,7 +28,7 @@ conda update conda
 
 ```
 # 配置环境
-conda create -n AgentME python=3.12.12 -y
+conda create -n AgentME python=3.14.4 -y
 
 # 激活环境
 conda activate AgentME
@@ -52,4 +52,24 @@ conda env export > environment.yml
 
 # 导入研发环境
 conda env create -f environment.yml
+```
+
+## Win11下VS Code-Jupyter配置
+
+Win11 安装：VS Code，同时安装 Microsoft Jupyter 插件
+
+WSL Ubuntu中安装 Jupyter 内核：
+
+```shell
+# 升级
+pip install --upgrade pip jupyter ipykernel
+
+# 注册内核
+python -m ipykernel install --user --name=wsl-python
+```
+
+重启 VS Code 和 WSL Ubuntu 系统：
+
+```powershell
+wsl --shutdown
 ```

@@ -15,7 +15,7 @@ fastmcp
 PyJWT==2.11.0
 
 # 向量化
-torch==2.10.0
+torch==2.11.0
 faiss-cpu
 chromadb==1.5.2
 
