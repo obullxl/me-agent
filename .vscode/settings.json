@@ -1,5 +1,5 @@
 {
-  "python.defaultInterpreterPath": "/home/obullxl/miniconda3/envs/AgentME/bin/python",
+  "python.defaultInterpreterPath": "/usr/local/Caskroom/miniconda/base/envs/AgentME/bin/python",
   "python.terminal.activateEnvironment": true,
   "terminal.integrated.env.linux": {
     "PYTHONPATH": "${workspaceFolder}:${env:PYTHONPATH}"
@@ -10,5 +10,7 @@
   "terminal.integrated.env.windows": {
     "PYTHONPATH": "${workspaceFolder};${env:PYTHONPATH}"
   },
-  "editor.fontSize": 14
+  "editor.fontSize": 14,
+  "python-envs.defaultEnvManager": "ms-python.python:conda",
+  "python-envs.defaultPackageManager": "ms-python.python:conda"
 }
