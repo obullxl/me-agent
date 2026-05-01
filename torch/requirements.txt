@@ -1,5 +1,9 @@
 #
 # pip install -r requirements.txt -U -i https://mirrors.aliyun.com/pypi/simple
+# 
+# CPU版本:
+# pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 #
-torch==2.11.0
-numpy==2.4.4
+numpy
+torch
+torchvision

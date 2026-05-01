@@ -46,7 +46,7 @@ me-agent/
 
 ### 环境要求
 
-- Python 3.14+
+- Python 3.12+
 - Git
 - Miniconda/Anaconda (推荐)
 
@@ -90,7 +90,7 @@ conda config --set show_channel_urls yes
 
 ```bash
 # 创建环境
-conda create -n AgentME python=3.14 -y
+conda create -n AgentME python=3.12 -y
 
 # 激活环境
 conda activate AgentME
